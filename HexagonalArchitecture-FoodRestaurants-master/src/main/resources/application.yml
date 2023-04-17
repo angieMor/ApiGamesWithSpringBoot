@@ -1,0 +1,23 @@
+server:
+  port: 8096
+
+spring:
+  name: game-service
+
+  datasource:
+    username: postgres
+    url: jdbc:postgresql://localhost:5432/postgres
+    platform: postgres
+    password: password
+
+  jpa:
+    generate-ddl: 'true'
+    database: POSTGRESQL
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: 'true'
+    show-sql: 'true'
+    hibernate:
+      ddl-auto: update
