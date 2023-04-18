@@ -1,4 +1,4 @@
-package com.powerup.square.domain;
+package com.powerup.square.domain.service;
 
 import com.powerup.square.domain.dto.UserGameHistoricalRequest;
 import com.powerup.square.domain.dto.UserGameHistoricalResponse;
@@ -8,9 +8,10 @@ import com.powerup.square.domain.model.UserGameHistorical;
 import com.powerup.square.domain.repository.IGameServiceHandlerRepository;
 import com.powerup.square.domain.repository.IPlayerServiceHandlerRepository;
 import com.powerup.square.domain.repository.IUserGameHistoricalServiceHandlerRepository;
-import com.powerup.square.domain.service.GameServiceHandler;
-import com.powerup.square.domain.service.PlayerServiceHandler;
+import com.powerup.square.domain.service.GameServiceHandlerDataTest;
+import com.powerup.square.domain.service.PlayerServiceHandlerDataTest;
 import com.powerup.square.domain.service.UserGameHistoricalServiceHandler;
+import com.powerup.square.domain.service.UserGameHistoricalServiceHandlerDataTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

@@ -1,4 +1,4 @@
-package com.powerup.square.domain;
+package com.powerup.square.domain.service;
 
 import com.powerup.square.domain.dto.PlayerRequest;
 import com.powerup.square.domain.exceptions.PlayerFirstNameAlreadyExist;
@@ -6,6 +6,7 @@ import com.powerup.square.domain.mapper.IPlayerRequestMapper;
 import com.powerup.square.domain.model.Player;
 import com.powerup.square.domain.repository.IPlayerServiceHandlerRepository;
 import com.powerup.square.domain.service.PlayerServiceHandler;
+import com.powerup.square.domain.service.PlayerServiceHandlerDataTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

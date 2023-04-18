@@ -1,4 +1,4 @@
-package com.powerup.square.domain;
+package com.powerup.square.domain.service;
 
 import com.powerup.square.domain.dto.UserGameHistoricalRequest;
 import com.powerup.square.domain.dto.UserGameHistoricalResponse;

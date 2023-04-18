@@ -1,4 +1,4 @@
-package com.powerup.square.domain;
+package com.powerup.square.domain.service;
 
 import com.powerup.square.domain.dto.GameRequest;
 import com.powerup.square.domain.exceptions.GameNameAlreadyExistException;
@@ -7,6 +7,7 @@ import com.powerup.square.domain.mapper.IGameRequestMapper;
 import com.powerup.square.domain.model.Game;
 import com.powerup.square.domain.repository.IGameServiceHandlerRepository;
 import com.powerup.square.domain.service.GameServiceHandler;
+import com.powerup.square.domain.service.GameServiceHandlerDataTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
