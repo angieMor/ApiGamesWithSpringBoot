@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface IPlayerServiceHandlerRepository {
 
-    void savePlayer(Player player);
+    Player savePlayer(Player player);
 
     Player getPlayerByFirstName(String firstName);
 

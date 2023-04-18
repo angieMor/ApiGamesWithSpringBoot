@@ -22,7 +22,7 @@ public class PlayerServiceHandler {
         this.iPlayerRequestMapper = iPlayerRequestMapper;
     }
 
-    public void savePlayer(PlayerRequest playerRequest){
+    public Player savePlayer(PlayerRequest playerRequest){
         if(iPlayerServiceHandlerRepository.existsByFirstName(playerRequest.getFirstName())){
             throw new PlayerFirstNameAlreadyExist();
         }
@@ -30,7 +30,7 @@ public class PlayerServiceHandler {
         Player player = iPlayerRequestMapper.toPlayer(playerRequest);
         player.setId(-1L);
 
-        iPlayerServiceHandlerRepository.savePlayer(player);
+        return iPlayerServiceHandlerRepository.savePlayer(player);
     }
 
     public Player getPlayerByFirstName(String firstName){

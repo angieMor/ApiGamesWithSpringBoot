@@ -24,7 +24,7 @@ public class PlayerJpaAdapter implements IPlayerServiceHandlerRepository {
 
 
     @Override
-    public void savePlayer(Player player) {
+    public Player savePlayer(Player player) {
         // age must be given wit a single letter
         if(player.getSex().length() > 1)
         {
@@ -37,7 +37,7 @@ public class PlayerJpaAdapter implements IPlayerServiceHandlerRepository {
         }
 
         PlayerEntity playerEntity = iPlayerMapper.toPlayerEntity(player);
-        iPlayerRepository.save(playerEntity);
+        return iPlayerMapper.toPlayer(iPlayerRepository.save(playerEntity));
     }
 
     @Override
