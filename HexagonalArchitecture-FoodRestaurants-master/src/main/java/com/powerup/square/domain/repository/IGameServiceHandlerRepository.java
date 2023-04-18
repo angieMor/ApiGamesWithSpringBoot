@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface IGameServiceHandlerRepository {
 
-    void saveGame(Game game);
+    Game saveGame(Game game);
 
     Game getGameByGameName(String gameName);
 

@@ -19,11 +19,11 @@ public class GameJpaAdapter implements IGameServiceHandlerRepository {
     private final IGameMapper gameMapper;
 
     @Override
-    public void saveGame(Game game){
+    public Game saveGame(Game game){
         GameEntity gameEntity = gameMapper.toGameEntity(game);
 
         // saving gameEntity into DB
-        gameRepository.save(gameEntity);
+        return gameMapper.toGame(gameRepository.save(gameEntity));
     }
 
     @Override

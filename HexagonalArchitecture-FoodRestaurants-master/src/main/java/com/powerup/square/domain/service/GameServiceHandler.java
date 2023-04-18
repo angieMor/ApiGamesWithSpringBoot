@@ -27,7 +27,7 @@ public class GameServiceHandler {
         this.gameRequestMapper = gameRequestMapper;
     }
 
-    public void saveGame(GameRequest gameRequest){
+    public Game saveGame(GameRequest gameRequest){
         if(iGameServiceHandlerRepository.existsByGameName(gameRequest.getGameName())){
             throw new GameNameAlreadyExistException();
         }
@@ -47,7 +47,7 @@ public class GameServiceHandler {
             game.setDateLaunched(newDateLaunched);
 
             // saving gameEntity into DB
-            iGameServiceHandlerRepository.saveGame(game);
+            return iGameServiceHandlerRepository.saveGame(game);
 
         } catch (DateTimeParseException i) {
             throw new DateLaunchedProvidedIsNotADateTypeException();
@@ -56,7 +56,7 @@ public class GameServiceHandler {
     }
 
     public Game getGameByGameName(String gameName){
-        if(!existsByGameName(gameName)){
+        if(!iGameServiceHandlerRepository.existsByGameName(gameName)){
             throw new GameNameProvidedDoesNotExistException();
         }
         return iGameServiceHandlerRepository.getGameByGameName(gameName);
@@ -69,6 +69,4 @@ public class GameServiceHandler {
     public List<Game> getAllGames(){
         return iGameServiceHandlerRepository.getAllGames();
     }
-
-
 }
