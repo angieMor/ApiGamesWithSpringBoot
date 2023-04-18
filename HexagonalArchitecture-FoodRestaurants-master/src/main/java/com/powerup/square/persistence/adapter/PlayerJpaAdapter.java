@@ -25,17 +25,6 @@ public class PlayerJpaAdapter implements IPlayerServiceHandlerRepository {
 
     @Override
     public Player savePlayer(Player player) {
-        // age must be given wit a single letter
-        if(player.getSex().length() > 1)
-        {
-            throw new SexProvidedIsNotACharacterOnlyException();
-        // also, only will allow F/M
-        } else if(!player.getSex().equals("F") &&
-                !player.getSex().equals("M"))
-        {
-            throw new SexProvidedDoesntExistException();
-        }
-
         PlayerEntity playerEntity = iPlayerMapper.toPlayerEntity(player);
         return iPlayerMapper.toPlayer(iPlayerRepository.save(playerEntity));
     }

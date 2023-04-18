@@ -1,6 +1,8 @@
 package com.powerup.square.domain.service;
 
 import com.powerup.square.domain.exceptions.PlayerFirstNameAlreadyExist;
+import com.powerup.square.domain.exceptions.SexProvidedDoesntExistException;
+import com.powerup.square.domain.exceptions.SexProvidedIsNotACharacterOnlyException;
 import com.powerup.square.domain.model.Player;
 import com.powerup.square.domain.mapper.IPlayerRequestMapper;
 import com.powerup.square.domain.repository.IPlayerServiceHandlerRepository;
@@ -26,6 +28,18 @@ public class PlayerServiceHandler {
         if(iPlayerServiceHandlerRepository.existsByFirstName(playerRequest.getFirstName())){
             throw new PlayerFirstNameAlreadyExist();
         }
+
+        // sex must be given wit a single letter
+        if(playerRequest.getSex().length() > 1)
+        {
+            throw new SexProvidedIsNotACharacterOnlyException();
+            // also, only will allow F/M
+        } else if(!playerRequest.getSex().equals("F") &&
+                !playerRequest.getSex().equals("M"))
+        {
+            throw new SexProvidedDoesntExistException();
+        }
+
         // Map playerRequest into a Player object model
         Player player = iPlayerRequestMapper.toPlayer(playerRequest);
         player.setId(-1L);
