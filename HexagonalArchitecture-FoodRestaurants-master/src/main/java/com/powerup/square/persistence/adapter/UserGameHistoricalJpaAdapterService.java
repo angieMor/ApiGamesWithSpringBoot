@@ -22,7 +22,7 @@ public class UserGameHistoricalJpaAdapterService implements IUserGameHistoricalS
     }
 
     @Override
-    public void addHoursOfGameForAPlayer(UserGameHistoricalRequest userGameHistoricalRequest,
+    public UserGameHistorical addHoursOfGameForAPlayer(UserGameHistoricalRequest userGameHistoricalRequest,
                                                 UserGameHistorical userGameHistorical) {
 
         UserGameHistoricalEntity addHoursPlayedToUserGameHistoricalHours = iUserGameHistoricalMapper.
@@ -30,7 +30,7 @@ public class UserGameHistoricalJpaAdapterService implements IUserGameHistoricalS
         addHoursPlayedToUserGameHistoricalHours.setHoursPlayed(userGameHistorical.getHoursPlayed() +
                 userGameHistoricalRequest.getHours());
 
-        iUserGameHistoricalRepository.save(addHoursPlayedToUserGameHistoricalHours);
+        return iUserGameHistoricalMapper.toUserGameHistorical(iUserGameHistoricalRepository.save(addHoursPlayedToUserGameHistoricalHours));
     }
 
     @Override
@@ -40,23 +40,23 @@ public class UserGameHistoricalJpaAdapterService implements IUserGameHistoricalS
     }
 
     @Override
-    public void editHoursOfGameForAPlayer(UserGameHistoricalRequest userGameHistoricalRequest,
+    public UserGameHistorical editHoursOfGameForAPlayer(UserGameHistoricalRequest userGameHistoricalRequest,
                                           UserGameHistorical userGameHistorical) {
 
         UserGameHistoricalEntity editHours = iUserGameHistoricalMapper.toUserGameHistoricalEntity(userGameHistorical);
         editHours.setHoursPlayed(userGameHistoricalRequest.getHours());
 
-        iUserGameHistoricalRepository.save(editHours);
+        return iUserGameHistoricalMapper.toUserGameHistorical(iUserGameHistoricalRepository.save(editHours));
     }
 
     @Override
-    public void deleteHoursToGameForAPlayer(UserGameHistoricalRequest userGameHistoricalRequest,
+    public UserGameHistorical deleteHoursToGameForAPlayer(UserGameHistoricalRequest userGameHistoricalRequest,
                                             UserGameHistorical userGameHistorical) {
 
         UserGameHistoricalEntity deleteHoursOfGamePlayed = iUserGameHistoricalMapper.toUserGameHistoricalEntity(userGameHistorical);
         deleteHoursOfGamePlayed.setHoursPlayed(userGameHistorical.getHoursPlayed() - userGameHistoricalRequest.getHours());
 
-        iUserGameHistoricalRepository.save(deleteHoursOfGamePlayed);
+        return iUserGameHistoricalMapper.toUserGameHistorical(iUserGameHistoricalRepository.save(deleteHoursOfGamePlayed));
     }
 
     @Override

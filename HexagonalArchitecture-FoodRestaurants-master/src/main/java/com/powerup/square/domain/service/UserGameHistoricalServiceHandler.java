@@ -46,27 +46,27 @@ public class UserGameHistoricalServiceHandler {
         Game game = iGameServiceHandlerRepository.getGameByGameName(userGameHistoricalRequest.getGameName());
         Player player = iPlayerServiceHandlerRepository.getPlayerByFirstName(userGameHistoricalRequest.getFirstName());
 
-        return getByGameIdAndByPlayerId(game.getId(), player.getId());
+        return iUserGameHistoricalServiceHandlerRepository.findByGameIdAndPlayerId(game.getId(), player.getId());
     }
 
-    public void addHoursOfGameForAPlayer(UserGameHistoricalRequest userGameHistoricalRequest){
+    public UserGameHistorical addHoursOfGameForAPlayer(UserGameHistoricalRequest userGameHistoricalRequest){
 
         UserGameHistorical userGameHistorical = getUserGameHistoricalData(userGameHistoricalRequest);
 
-        iUserGameHistoricalServiceHandlerRepository.addHoursOfGameForAPlayer(userGameHistoricalRequest, userGameHistorical);
+        return iUserGameHistoricalServiceHandlerRepository.addHoursOfGameForAPlayer(userGameHistoricalRequest, userGameHistorical);
     }
 
-    public UserGameHistorical getByGameIdAndByPlayerId(Long gameId, Long playerId){
+    public UserGameHistorical findByGameIdAndPlayerId(Long gameId, Long playerId){
         return iUserGameHistoricalServiceHandlerRepository.findByGameIdAndPlayerId(gameId,playerId);
     }
 
-    public void editHoursOfGameForAPlayer(UserGameHistoricalRequest userGameHistoricalRequest){
+    public UserGameHistorical editHoursOfGameForAPlayer(UserGameHistoricalRequest userGameHistoricalRequest){
         UserGameHistorical userGameHistorical = getUserGameHistoricalData(userGameHistoricalRequest);
 
-        iUserGameHistoricalServiceHandlerRepository.editHoursOfGameForAPlayer(userGameHistoricalRequest, userGameHistorical);
+        return iUserGameHistoricalServiceHandlerRepository.editHoursOfGameForAPlayer(userGameHistoricalRequest, userGameHistorical);
     }
 
-    public void deleteHoursToGameForAPlayer(UserGameHistoricalRequest userGameHistoricalRequest){
+    public UserGameHistorical deleteHoursToGameForAPlayer(UserGameHistoricalRequest userGameHistoricalRequest){
         UserGameHistorical userGameHistorical = getUserGameHistoricalData(userGameHistoricalRequest);
 
         // Hours requested do reduce, must be lower than the hours_played record
@@ -74,7 +74,7 @@ public class UserGameHistoricalServiceHandler {
             throw new HoursToRemoveShouldNotBeGreaterThanTheOnesRegisteredException();
         }
 
-        iUserGameHistoricalServiceHandlerRepository.deleteHoursToGameForAPlayer(userGameHistoricalRequest, userGameHistorical);
+        return iUserGameHistoricalServiceHandlerRepository.deleteHoursToGameForAPlayer(userGameHistoricalRequest, userGameHistorical);
     }
 
     public List<UserGameHistoricalResponse> shapeResponse(List<UserGameHistorical> top10){
@@ -97,6 +97,7 @@ public class UserGameHistoricalServiceHandler {
         if(!iGameServiceHandlerRepository.existsByGameName(gameName)){
             throw new GameNameProvidedDoesNotExistException();
         }
+
         Long gameId = iGameServiceHandlerRepository.getGameByGameName(gameName).getId();
         List<UserGameHistorical> top10 = iUserGameHistoricalServiceHandlerRepository.getTop10OfPlayersByGame(gameId);
 
@@ -107,8 +108,8 @@ public class UserGameHistoricalServiceHandler {
         if(!iPlayerServiceHandlerRepository.existsByFirstName(playerFirstName)){
             throw new PlayerFirstNameProvidedDoesNotExistException();
         }
-        Long playerId = iPlayerServiceHandlerRepository.getPlayerByFirstName(playerFirstName).getId();
 
+        Long playerId = iPlayerServiceHandlerRepository.getPlayerByFirstName(playerFirstName).getId();
         List<UserGameHistorical> top10GamesByPlayer = iUserGameHistoricalServiceHandlerRepository.getTop10OfGamesPlayedByPlayer(playerId);
 
         return shapeResponse(top10GamesByPlayer);
