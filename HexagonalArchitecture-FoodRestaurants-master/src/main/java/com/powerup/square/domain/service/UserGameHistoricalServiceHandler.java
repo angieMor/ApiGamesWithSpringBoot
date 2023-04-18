@@ -7,6 +7,8 @@ import com.powerup.square.domain.mapper.IUserGameHistoricalResponseMapper;
 import com.powerup.square.domain.model.Game;
 import com.powerup.square.domain.model.Player;
 import com.powerup.square.domain.model.UserGameHistorical;
+import com.powerup.square.domain.repository.IGameServiceHandlerRepository;
+import com.powerup.square.domain.repository.IPlayerServiceHandlerRepository;
 import com.powerup.square.domain.repository.IUserGameHistoricalServiceHandlerRepository;
 import com.powerup.square.domain.mapper.IUserGameHistoricalRequestMapper;
 
@@ -23,30 +25,26 @@ import java.util.List;
 public class UserGameHistoricalServiceHandler {
 
     private IUserGameHistoricalServiceHandlerRepository iUserGameHistoricalServiceHandlerRepository;
-    private IUserGameHistoricalRequestMapper iUserGameHistoricalRequestMapper;
-    private IUserGameHistoricalResponseMapper iUserGameHistoricalResponseMapper;
-    private GameServiceHandler gameServiceHandler;
-    private PlayerServiceHandler playerServiceHandler;
+    private IGameServiceHandlerRepository iGameServiceHandlerRepository;
+    private IPlayerServiceHandlerRepository iPlayerServiceHandlerRepository;
 
-    public UserGameHistoricalServiceHandler(IUserGameHistoricalServiceHandlerRepository iUserGameHistoricalServiceHandlerRepository, IUserGameHistoricalRequestMapper iUserGameHistoricalRequestMapper, IUserGameHistoricalResponseMapper iUserGameHistoricalResponseMapper, GameServiceHandler gameServiceHandler, PlayerServiceHandler playerServiceHandler) {
+    public UserGameHistoricalServiceHandler(IUserGameHistoricalServiceHandlerRepository iUserGameHistoricalServiceHandlerRepository, IGameServiceHandlerRepository iGameServiceHandlerRepository, IPlayerServiceHandlerRepository iPlayerServiceHandlerRepository) {
         this.iUserGameHistoricalServiceHandlerRepository = iUserGameHistoricalServiceHandlerRepository;
-        this.iUserGameHistoricalRequestMapper = iUserGameHistoricalRequestMapper;
-        this.iUserGameHistoricalResponseMapper = iUserGameHistoricalResponseMapper;
-        this.gameServiceHandler = gameServiceHandler;
-        this.playerServiceHandler = playerServiceHandler;
+        this.iGameServiceHandlerRepository = iGameServiceHandlerRepository;
+        this.iPlayerServiceHandlerRepository = iPlayerServiceHandlerRepository;
     }
 
     public UserGameHistorical getUserGameHistoricalData(UserGameHistoricalRequest userGameHistoricalRequest){
 
-        if(!gameServiceHandler.existsByGameName(userGameHistoricalRequest.getGameName())){
+        if(!iGameServiceHandlerRepository.existsByGameName(userGameHistoricalRequest.getGameName())){
             throw new GameNameProvidedDoesNotExistException();
         }
-        if(!playerServiceHandler.existsByFirstName(userGameHistoricalRequest.getFirstName())){
+        if(!iPlayerServiceHandlerRepository.existsByFirstName(userGameHistoricalRequest.getFirstName())){
             throw new PlayerFirstNameProvidedDoesNotExistException();
         }
 
-        Game game = gameServiceHandler.getGameByGameName(userGameHistoricalRequest.getGameName());
-        Player player = playerServiceHandler.getPlayerByFirstName(userGameHistoricalRequest.getFirstName());
+        Game game = iGameServiceHandlerRepository.getGameByGameName(userGameHistoricalRequest.getGameName());
+        Player player = iPlayerServiceHandlerRepository.getPlayerByFirstName(userGameHistoricalRequest.getFirstName());
 
         return getByGameIdAndByPlayerId(game.getId(), player.getId());
     }
@@ -96,20 +94,20 @@ public class UserGameHistoricalServiceHandler {
     }
 
     public List<UserGameHistoricalResponse> getTop10OfPlayersByGame(String gameName){
-        if(!gameServiceHandler.existsByGameName(gameName)){
+        if(!iGameServiceHandlerRepository.existsByGameName(gameName)){
             throw new GameNameProvidedDoesNotExistException();
         }
-        Long gameId = gameServiceHandler.getGameByGameName(gameName).getId();
+        Long gameId = iGameServiceHandlerRepository.getGameByGameName(gameName).getId();
         List<UserGameHistorical> top10 = iUserGameHistoricalServiceHandlerRepository.getTop10OfPlayersByGame(gameId);
 
         return shapeResponse(top10);
     }
 
     public List<UserGameHistoricalResponse> getTop10OfGamesPlayedByPlayer(String playerFirstName){
-        if(!playerServiceHandler.existsByFirstName(playerFirstName)){
+        if(!iPlayerServiceHandlerRepository.existsByFirstName(playerFirstName)){
             throw new PlayerFirstNameProvidedDoesNotExistException();
         }
-        Long playerId = playerServiceHandler.getPlayerByFirstName(playerFirstName).getId();
+        Long playerId = iPlayerServiceHandlerRepository.getPlayerByFirstName(playerFirstName).getId();
 
         List<UserGameHistorical> top10GamesByPlayer = iUserGameHistoricalServiceHandlerRepository.getTop10OfGamesPlayedByPlayer(playerId);
 
