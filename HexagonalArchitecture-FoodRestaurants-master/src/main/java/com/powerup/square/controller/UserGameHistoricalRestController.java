@@ -28,7 +28,7 @@ public class UserGameHistoricalRestController {
             @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content),
             @ApiResponse(responseCode = "405", description = "Method not allowed", content = @Content)
     })
-    @PostMapping("/add/hours")
+    @PutMapping("/add/hours")
     public ResponseEntity<Void> addHoursOfGameForAPlayerEntity(
             @Validated @RequestBody UserGameHistoricalRequest userGameHistoricalRequest){
         userGameHistoricalServiceHandler.addHoursOfGameForAPlayer(userGameHistoricalRequest);
@@ -41,7 +41,7 @@ public class UserGameHistoricalRestController {
             @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content),
             @ApiResponse(responseCode = "405", description = "Method not allowed", content = @Content)
     })
-    @PutMapping("/edit/hours")
+    @PutMapping("/set/hours")
     public ResponseEntity<Void> editHoursOfGameForAPlayerEntity(
             @Validated @RequestBody UserGameHistoricalRequest userGameHistoricalRequest){
         userGameHistoricalServiceHandler.editHoursOfGameForAPlayer(userGameHistoricalRequest);
@@ -54,7 +54,7 @@ public class UserGameHistoricalRestController {
             @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content),
             @ApiResponse(responseCode = "405", description = "Method not allowed", content = @Content)
     })
-    @DeleteMapping("/delete/hours")
+    @PutMapping("/reduce/hours")
     public ResponseEntity<Void> deleteHoursToGameDependingOnPlayerEntity(
             @Validated @RequestBody UserGameHistoricalRequest userGameHistoricalRequest){
         userGameHistoricalServiceHandler.deleteHoursToGameForAPlayer(userGameHistoricalRequest);
